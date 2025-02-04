@@ -10,31 +10,33 @@ int main() {
     SDL_Event event;
 
     while (running) {
-        // ✅ Handle events (close window, process input)
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
             }
             if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
-                    case SDLK_w:   // Player 1 Up
+                    // Player 1 
+                    case SDLK_w:   
                         game.movePlayer(1, -1);
                         break;
-                    case SDLK_s:   // Player 1 Down
+                    case SDLK_s:  
                         game.movePlayer(1, 1);
                         break;
-                    case SDLK_UP:  // Player 2 Up
+
+                    // Player 2 
+                    case SDLK_UP:
                         game.movePlayer(2, -1);
                         break;
-                    case SDLK_DOWN: // Player 2 Down
+                    case SDLK_DOWN:
                         game.movePlayer(2, 1);
                         break;
                 }
             }
         }
 
-        game.update();  // Update game logic
-        renderer.render(game.getPlayer1(), game.getPlayer2(), game.getBall());  // Render frame
+        game.update(); 
+        renderer.render(game.getPlayer1(), game.getPlayer2(), game.getBall());
         
         SDL_Delay(16);  // ~60 FPS
     }

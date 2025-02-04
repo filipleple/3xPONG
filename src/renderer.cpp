@@ -1,11 +1,12 @@
 // renderer.cpp
 #include "renderer.hpp"
+#include "config.hpp"
 
 Renderer::Renderer() {
     SDL_Init(SDL_INIT_VIDEO);
-    leftWindow = SDL_CreateWindow("Player 1", 100, 100, 300, 600, SDL_WINDOW_SHOWN);
-    middleWindow = SDL_CreateWindow("Center", 400, 100, 300, 600, SDL_WINDOW_SHOWN);
-    rightWindow = SDL_CreateWindow("Player 2", 700, 100, 300, 600, SDL_WINDOW_SHOWN);
+    leftWindow = SDL_CreateWindow("Player 1", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+    middleWindow = SDL_CreateWindow("Center", 400, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+    rightWindow = SDL_CreateWindow("Player 2", 700, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 
     leftRenderer = SDL_CreateRenderer(leftWindow, -1, SDL_RENDERER_ACCELERATED);
     middleRenderer = SDL_CreateRenderer(middleWindow, -1, SDL_RENDERER_ACCELERATED);
@@ -36,16 +37,16 @@ void Renderer::render(const Player &p1, const Player &p2, const Ball &ball) {
     SDL_SetRenderDrawColor(rightRenderer, 255, 255, 255, 255);
 
     // Render Player 1 Paddle in Left Window
-    SDL_Rect paddle1 = { 50, static_cast<int>(p1.y), 10, 60 };
+    SDL_Rect paddle1 = { 50, static_cast<int>(p1.y), PADDLE_WIDTH, PADDLE_HEIGHT};
     SDL_RenderFillRect(leftRenderer, &paddle1);
 
     // Render Player 2 Paddle in Right Window
-    SDL_Rect paddle2 = { 50, static_cast<int>(p2.y), 10, 60 };
+    SDL_Rect paddle2 = { 50, static_cast<int>(p2.y), PADDLE_WIDTH, PADDLE_HEIGHT};
     SDL_RenderFillRect(rightRenderer, &paddle2);
 
     // Render Ball in Middle Window
     SDL_SetRenderDrawColor(middleRenderer, 255, 255, 255, 255);
-    SDL_Rect ballRect = { static_cast<int>(ball.x), static_cast<int>(ball.y), 10, 10 };
+    SDL_Rect ballRect = { static_cast<int>(ball.x), static_cast<int>(ball.y), BALL_SIZE, BALL_SIZE };
     SDL_RenderFillRect(middleRenderer, &ballRect);
 
     // Present the renders
