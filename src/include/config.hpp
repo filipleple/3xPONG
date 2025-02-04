@@ -20,7 +20,7 @@ const int BALL_INIT_X = 300;
 const int BALL_INIT_Y = 300;
 
 // World settings (game coordinate space)
-const int WORLD_WIDTH = 600;   // Total game width
+const int WORLD_WIDTH = 900;   // Total game width
 const int WORLD_HEIGHT = 600;  // Game height
 
 #endif // CONFIG_HPP
