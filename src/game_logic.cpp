@@ -31,12 +31,12 @@ void GameLogic::update() {
 
     std::cout << "Ball position: (" << state->ball_x << ", " << state->ball_y <<  ")\n";
 
-    // ✅ Bounce off top and bottom
+    // Bounce off top and bottom
     if (state->ball_y <= 0 || state->ball_y + BALL_SIZE >= WORLD_HEIGHT) {
         ball.vy = -ball.vy;
     }
 
-    // ✅ Paddle collision
+    // Paddle collision
     bool hitPaddle1 = (state->ball_x <= PADDLE_MARGIN + PADDLE_WIDTH &&
                        state->ball_y + BALL_SIZE >= state->paddle1_y &&
                        state->ball_y <= state->paddle1_y + PADDLE_HEIGHT);
@@ -49,7 +49,7 @@ void GameLogic::update() {
         ball.vx = -ball.vx; // Reverse horizontal direction
     }
 
-    // ✅ Ball out of bounds (score)
+    // Ball out of bounds (score)
     if (state->ball_x < 0 || state->ball_x > WORLD_WIDTH) {
         resetBall(); // Reset ball after scoring
     }
@@ -68,7 +68,7 @@ void GameLogic::movePlayer(int playerNum, int direction) {
 }
 
 void GameLogic::resetBall() {
-    ball.reset();  // ✅ Reset ball position and velocity
+    ball.reset();
     state->ball_x = BALL_INIT_X;
     state->ball_y = BALL_INIT_Y;
 }
