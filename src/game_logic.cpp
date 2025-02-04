@@ -72,9 +72,16 @@ void GameLogic::movePlayer(int playerNum, int direction) {
     float moveAmount = PADDLE_SPEED * direction; // Move up (-1) or down (+1)
 
     if (playerNum == 1) {
-        state->paddle1_y += moveAmount;
+        if (state->paddle1_y+moveAmount >= 0 &&
+            state->paddle1_y+moveAmount <= WINDOW_HEIGHT - PADDLE_HEIGHT){
+            state->paddle1_y += moveAmount;
+        }
+
     } else if (playerNum == 2) {
-        state->paddle2_y += moveAmount;
+        if (state->paddle2_y+moveAmount >= 0 &&
+            state->paddle2_y+moveAmount <= WINDOW_HEIGHT - PADDLE_HEIGHT){
+            state->paddle2_y += moveAmount;
+        }
     }
 }
 

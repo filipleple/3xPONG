@@ -12,7 +12,7 @@ const int WORLD_HEIGHT = 600;
 // Paddle settings
 const int PADDLE_WIDTH = 10;
 const int PADDLE_HEIGHT = 60;
-const int PADDLE_SPEED = 10;
+const int PADDLE_SPEED = 30;
 const int PADDLE_MARGIN = 50;
 const int PADDLE_INIT_Y = 250;
 
