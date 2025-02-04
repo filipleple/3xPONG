@@ -14,7 +14,7 @@ private:
 public:
     Renderer();
     ~Renderer();
-    void render(Player &p1, Player &p2, Ball &ball);
+    void render(const Player &p1, const Player &p2, const Ball &ball);
 };
 
 #endif

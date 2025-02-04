@@ -22,7 +22,7 @@ Renderer::~Renderer() {
     SDL_Quit();
 }
 
-void Renderer::render(Player &p1, Player &p2, Ball &ball) {
+void Renderer::render(const Player &p1, const Player &p2, const Ball &ball) {
     SDL_SetRenderDrawColor(leftRenderer, 0, 0, 0, 255);
     SDL_RenderClear(leftRenderer);
     

@@ -1,4 +1,6 @@
 // game_logic.hpp
+//
+// 
 #ifndef GAME_LOGIC_HPP
 #define GAME_LOGIC_HPP
 
@@ -13,6 +15,11 @@ private:
 public:
     GameLogic();
     void update();
+
+    void movePlayer(int playerNum, int direction);
+    const Player& getPlayer1() const { return p1; }
+    const Player& getPlayer2() const { return p2; }
+    const Ball& getBall() const { return ball; }
 };
 
 struct GameState {
@@ -20,7 +27,7 @@ struct GameState {
     float paddle1_y, paddle2_y;
 };
 
-GameState *state;
+extern GameState *state;
 
 #endif
  
