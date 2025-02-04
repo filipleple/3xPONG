@@ -23,17 +23,32 @@ Renderer::~Renderer() {
 }
 
 void Renderer::render(const Player &p1, const Player &p2, const Ball &ball) {
+    // Set background color (black)
     SDL_SetRenderDrawColor(leftRenderer, 0, 0, 0, 255);
     SDL_RenderClear(leftRenderer);
-    
     SDL_SetRenderDrawColor(middleRenderer, 0, 0, 0, 255);
     SDL_RenderClear(middleRenderer);
-    
     SDL_SetRenderDrawColor(rightRenderer, 0, 0, 0, 255);
     SDL_RenderClear(rightRenderer);
 
-    // Map world coordinates to the correct window coordinates
+    // Set paddle color (white)
+    SDL_SetRenderDrawColor(leftRenderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(rightRenderer, 255, 255, 255, 255);
 
+    // Render Player 1 Paddle in Left Window
+    SDL_Rect paddle1 = { 50, static_cast<int>(p1.y), 10, 60 };
+    SDL_RenderFillRect(leftRenderer, &paddle1);
+
+    // Render Player 2 Paddle in Right Window
+    SDL_Rect paddle2 = { 50, static_cast<int>(p2.y), 10, 60 };
+    SDL_RenderFillRect(rightRenderer, &paddle2);
+
+    // Render Ball in Middle Window
+    SDL_SetRenderDrawColor(middleRenderer, 255, 255, 255, 255);
+    SDL_Rect ballRect = { static_cast<int>(ball.x), static_cast<int>(ball.y), 10, 10 };
+    SDL_RenderFillRect(middleRenderer, &ballRect);
+
+    // Present the renders
     SDL_RenderPresent(leftRenderer);
     SDL_RenderPresent(middleRenderer);
     SDL_RenderPresent(rightRenderer);
