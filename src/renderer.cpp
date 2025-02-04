@@ -38,11 +38,11 @@ void Renderer::render(const Player &p1, const Player &p2, const Ball &ball) {
     SDL_SetRenderDrawColor(rightRenderer, 255, 255, 255, 255);
 
     // Render Player 1 Paddle in Left Window
-    SDL_Rect paddle1 = { PADDLE_MARGIN, static_cast<int>(p1.y), PADDLE_WIDTH, PADDLE_HEIGHT };
+    SDL_Rect paddle1 = { PADDLE_MARGIN, state->paddle1_y, PADDLE_WIDTH, PADDLE_HEIGHT };
     SDL_RenderFillRect(leftRenderer, &paddle1);
 
     // Render Player 2 Paddle in Right Window
-    SDL_Rect paddle2 = { WINDOW_WIDTH - PADDLE_MARGIN - PADDLE_WIDTH, static_cast<int>(p2.y), PADDLE_WIDTH, PADDLE_HEIGHT };
+    SDL_Rect paddle2 = { WINDOW_WIDTH - PADDLE_MARGIN - PADDLE_WIDTH, state->paddle2_y, PADDLE_WIDTH, PADDLE_HEIGHT };
     SDL_RenderFillRect(rightRenderer, &paddle2);
 
     // Set ball color (white)

@@ -29,41 +29,52 @@ void GameLogic::update() {
     state->ball_x += ball.vx;
     state->ball_y += ball.vy;
 
-    std::cout << "Ball position: (" << state->ball_x << ", " << state->ball_y <<  ")\n";
+    std::cout << "Ball position: (" << state->ball_x << ", " << state->ball_y << ")\n";
+    std::cout << "Paddle 1 Y: " << state->paddle1_y << " | Paddle 2 Y: " << state->paddle2_y << "\n";
 
     // Bounce off top and bottom
     if (state->ball_y <= 0 || state->ball_y + BALL_SIZE >= WORLD_HEIGHT) {
         ball.vy = -ball.vy;
     }
 
-    // Paddle collision
+    // Debug paddle collision checks
+    std::cout << "Checking paddle collision...\n";
+
     bool hitPaddle1 = (state->ball_x <= PADDLE_MARGIN + PADDLE_WIDTH &&
+                       state->ball_x + BALL_SIZE >= PADDLE_MARGIN &&
                        state->ball_y + BALL_SIZE >= state->paddle1_y &&
                        state->ball_y <= state->paddle1_y + PADDLE_HEIGHT);
 
     bool hitPaddle2 = (state->ball_x + BALL_SIZE >= WORLD_WIDTH - PADDLE_MARGIN - PADDLE_WIDTH &&
+                       state->ball_x <= WORLD_WIDTH - PADDLE_MARGIN &&
                        state->ball_y + BALL_SIZE >= state->paddle2_y &&
                        state->ball_y <= state->paddle2_y + PADDLE_HEIGHT);
 
-    if (hitPaddle1 || hitPaddle2) {
-        ball.vx = -ball.vx; // Reverse horizontal direction
+    if (hitPaddle1) {
+        std::cout << "Ball hit Player 1's paddle! Reversing direction.\n";
+        ball.vx = abs(ball.vx);  // Make sure velocity is positive (right direction)
+    }
+
+    if (hitPaddle2) {
+        std::cout << "Ball hit Player 2's paddle! Reversing direction.\n";
+        ball.vx = -abs(ball.vx);  // Make sure velocity is negative (left direction)
     }
 
     // Ball out of bounds (score)
     if (state->ball_x < 0 || state->ball_x > WORLD_WIDTH) {
-        resetBall(); // Reset ball after scoring
+        std::cout << "Ball out of bounds. Resetting...\n";
+        resetBall();
     }
 }
-
 
 
 void GameLogic::movePlayer(int playerNum, int direction) {
     float moveAmount = PADDLE_SPEED * direction; // Move up (-1) or down (+1)
 
     if (playerNum == 1) {
-        p1.y += moveAmount;
+        state->paddle1_y += moveAmount;
     } else if (playerNum == 2) {
-        p2.y += moveAmount;
+        state->paddle2_y += moveAmount;
     }
 }
 
