@@ -16,8 +16,8 @@ const int PADDLE_INIT_Y = 250;
 const int BALL_SIZE = 10;
 const int BALL_SPEED_X = 3;
 const int BALL_SPEED_Y = 3;
-const int BALL_INIT_X = 600;
-const int BALL_INIT_Y = 600;
+const int BALL_INIT_X = 300;
+const int BALL_INIT_Y = 300;
 
 // World settings (game coordinate space)
 const int WORLD_WIDTH = 600;   // Total game width

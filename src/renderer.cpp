@@ -1,5 +1,6 @@
 // renderer.cpp
 #include "renderer.hpp"
+#include "game_logic.hpp"
 #include "config.hpp"
 
 Renderer::Renderer() {
@@ -46,7 +47,7 @@ void Renderer::render(const Player &p1, const Player &p2, const Ball &ball) {
 
     // Render Ball in Middle Window
     SDL_SetRenderDrawColor(middleRenderer, 255, 255, 255, 255);
-    SDL_Rect ballRect = { static_cast<int>(ball.x), static_cast<int>(ball.y), BALL_SIZE, BALL_SIZE };
+    SDL_Rect ballRect = { static_cast<int>(state->ball_x), static_cast<int>(state->ball_y), BALL_SIZE, BALL_SIZE };
     SDL_RenderFillRect(middleRenderer, &ballRect);
 
     // Present the renders

@@ -9,6 +9,7 @@ public:
 
     Ball(float startX, float startY, float velX, float velY);
     void update();
+    void reset();
 };
 
 #endif

@@ -15,8 +15,9 @@ private:
 public:
     GameLogic();
     void update();
-
     void movePlayer(int playerNum, int direction);
+    void resetBall();
+
     const Player& getPlayer1() const { return p1; }
     const Player& getPlayer2() const { return p2; }
     const Ball& getBall() const { return ball; }
