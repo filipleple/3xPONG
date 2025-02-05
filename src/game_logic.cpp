@@ -32,16 +32,20 @@ void GameLogic::update() {
     state->ball_x += ball.vx;
     state->ball_y += ball.vy;
 
+    #ifdef DEBUG
     std::cout << "Ball position: (" << state->ball_x << ", " << state->ball_y << ")\n";
     std::cout << "Paddle 1 Y: " << state->paddle1_y << " | Paddle 2 Y: " << state->paddle2_y << "\n";
+    #endif
 
     // Bounce off top and bottom
     if (state->ball_y <= 0 || state->ball_y + BALL_SIZE >= WORLD_HEIGHT) {
         ball.vy = -ball.vy;
     }
 
+    #ifdef DEBUG
     // Debug paddle collision checks
     std::cout << "Checking paddle collision...\n";
+    #endif
 
     bool hitPaddle1 = (state->ball_x <= PADDLE_MARGIN + PADDLE_WIDTH &&
                        state->ball_x + BALL_SIZE >= PADDLE_MARGIN &&
@@ -54,12 +58,16 @@ void GameLogic::update() {
                        state->ball_y <= state->paddle2_y + PADDLE_HEIGHT);
 
     if (hitPaddle1) {
+        #ifdef DEBUG
         std::cout << "Ball hit Player 1's paddle! Reversing direction.\n";
+        #endif
         ball.vx = abs(ball.vx);  // Make sure velocity is positive (right direction)
     }
 
     if (hitPaddle2) {
+        #ifdef DEBUG
         std::cout << "Ball hit Player 2's paddle! Reversing direction.\n";
+        #endif
         ball.vx = -abs(ball.vx);  // Make sure velocity is negative (left direction)
     }
 

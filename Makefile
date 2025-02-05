@@ -1,10 +1,16 @@
 # Compiler
 CXX = g++
+
+# Base compiler flags
 CXXFLAGS = -Wall -Wextra -I./src/include -std=c++17
 
 # SDL2 flags
 SDL2_CFLAGS := $(shell sdl2-config --cflags)
 SDL2_LDFLAGS := $(shell sdl2-config --libs)
+
+# Debug and Release flags
+DEBUG_FLAGS = -DDEBUG -g
+RELEASE_FLAGS = -O2
 
 # Source and Object files
 SRC_DIR = src
@@ -35,3 +41,11 @@ clean:
 # Run the game
 run: $(TARGET)
 	./$(TARGET)
+
+# Debug build (includes debug prints and symbols)
+debug: CXXFLAGS += $(DEBUG_FLAGS)
+debug: $(TARGET)
+
+# Release build (optimized, no debug prints)
+release: CXXFLAGS += $(RELEASE_FLAGS)
+release: $(TARGET)
