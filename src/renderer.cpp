@@ -2,9 +2,18 @@
 #include "renderer.hpp"
 #include "game_logic.hpp"
 #include "config.hpp"
+#include <string>
 
 Renderer::Renderer() {
     SDL_Init(SDL_INIT_VIDEO);
+
+    TTF_Init();
+
+    font = TTF_OpenFont("3rd-party/medodica.ttf", 48);  // Load retro font (use any pixel font)
+    if (!font) {
+        // std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
+    }
+    
     leftWindow = SDL_CreateWindow("Player 1", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     middleWindow = SDL_CreateWindow("Center", 400, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     rightWindow = SDL_CreateWindow("Player 2", 700, 100, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
@@ -15,6 +24,8 @@ Renderer::Renderer() {
 }
 
 Renderer::~Renderer() {
+    TTF_CloseFont(font);
+    TTF_Quit();
     SDL_DestroyRenderer(leftRenderer);
     SDL_DestroyRenderer(middleRenderer);
     SDL_DestroyRenderer(rightRenderer);
@@ -63,10 +74,27 @@ void Renderer::render(const Player &p1, const Player &p2, const Ball &ball) {
     } else {
         SDL_RenderFillRect(rightRenderer, &ballRect);
     }
+    
+    renderScore(leftRenderer, 10, 10, state->score_p1);
+    renderScore(rightRenderer, 10, 10, state->score_p2);
 
     // Present the renders
     SDL_RenderPresent(leftRenderer);
     SDL_RenderPresent(middleRenderer);
     SDL_RenderPresent(rightRenderer);
+}
+
+void Renderer::renderScore(SDL_Renderer *renderer, int x, int y, int score) {
+    SDL_Color white = {255, 255, 255, 255};
+    std::string scoreText = "Score: " + std::to_string(score);
+
+    SDL_Surface* surface = TTF_RenderText_Solid(font, scoreText.c_str(), white);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+    SDL_Rect dest = {x, y, surface->w, surface->h};
+    SDL_RenderCopy(renderer, texture, NULL, &dest);
+
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
 }
 

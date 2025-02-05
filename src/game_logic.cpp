@@ -22,6 +22,9 @@ GameLogic::GameLogic():
         state->ball_y = BALL_INIT_Y;
         state->paddle1_y = PADDLE_INIT_Y;
         state->paddle2_y = PADDLE_INIT_Y;
+
+        state->score_p1 = 0;
+        state->score_p2 = 0;
     }
 }
 
@@ -60,9 +63,11 @@ void GameLogic::update() {
         ball.vx = -abs(ball.vx);  // Make sure velocity is negative (left direction)
     }
 
-    // Ball out of bounds (score)
-    if (state->ball_x < 0 || state->ball_x > WORLD_WIDTH) {
-        std::cout << "Ball out of bounds. Resetting...\n";
+    if (state->ball_x < 0) {
+        state->score_p2++;  // Player 2 scores
+        resetBall();
+    } else if (state->ball_x > WORLD_WIDTH) {
+        state->score_p1++;  // Player 1 scores
         resetBall();
     }
 }

@@ -26,6 +26,8 @@ public:
 struct GameState {
     float ball_x, ball_y;
     float paddle1_y, paddle2_y;
+
+    int score_p1, score_p2;
 };
 
 extern GameState *state;

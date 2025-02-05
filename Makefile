@@ -26,7 +26,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 
 # Link everything into final executable
 $(TARGET): $(OBJS)
-	$(CXX) $(OBJS) $(SDL2_LDFLAGS) -o $(TARGET)
+	$(CXX) $(OBJS) $(SDL2_LDFLAGS) -lSDL2_ttf -o $(TARGET)
 
 # Clean build files
 clean:
