@@ -12,6 +12,7 @@ private:
     SDL_Window *leftWindow, *middleWindow, *rightWindow;
     SDL_Renderer *leftRenderer, *middleRenderer, *rightRenderer;
     TTF_Font *font;
+    void init_audio();
 
 public:
     Renderer();
@@ -19,5 +20,7 @@ public:
     void render(const Player &p1, const Player &p2, const Ball &ball);
     void renderScore(SDL_Renderer *renderer, int x, int y, int score);
 };
+
+void audio_callback(void* userdata, Uint8* stream, int len);
 
 #endif

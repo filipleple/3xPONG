@@ -1,11 +1,13 @@
 // renderer.cpp
+#include <iostream>
 #include "renderer.hpp"
 #include "game_logic.hpp"
 #include "config.hpp"
 #include <string>
 
 Renderer::Renderer() {
-    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+    init_audio();
 
     TTF_Init();
 
@@ -21,6 +23,36 @@ Renderer::Renderer() {
     leftRenderer = SDL_CreateRenderer(leftWindow, -1, SDL_RENDERER_ACCELERATED);
     middleRenderer = SDL_CreateRenderer(middleWindow, -1, SDL_RENDERER_ACCELERATED);
     rightRenderer = SDL_CreateRenderer(rightWindow, -1, SDL_RENDERER_ACCELERATED);
+}
+
+// Simple sine wave generator
+void audio_callback(void* userdata, Uint8* stream, int len) {
+    if (state == nullptr) {
+        std::cerr << "Error: state is null in audio_callback!\n";
+        memset(stream, 0, len);  // Fill buffer with silence
+        return;
+    }
+    static float phase = 0.0f;
+    float volume = 0.02f;
+    
+    for (int i = 0; i < len; i++) {
+        float sample = sin(phase) * volume;  // Generate a sine wave
+        stream[i] = (Uint8)((sample + 1.0) * 127);  // Convert float (-1 to 1) to Uint8 (0-255)
+        phase += 0.1 * state->sound_speed;  // Modify phase based on broken `sound_speed`
+    }
+}
+
+void Renderer::init_audio() {
+    SDL_AudioSpec spec;
+    SDL_memset(&spec, 0, sizeof(spec));
+    spec.freq = 44100;
+    spec.format = AUDIO_U8;
+    spec.channels = 1;
+    spec.samples = 512;
+    spec.callback = audio_callback;
+
+    SDL_OpenAudio(&spec, NULL);
+    SDL_PauseAudio(0);  // Start playing immediately
 }
 
 Renderer::~Renderer() {

@@ -1,11 +1,12 @@
 #include <sys/mman.h>
+#include <cmath>
 #include "iostream"
 #include <fcntl.h>
 #include <unistd.h>
 #include "game_logic.hpp"
 #include "include/config.hpp"
 
-GameState *state = nullptr; 
+GameState *state = nullptr;
 
 GameLogic::GameLogic():
     p1(1, PADDLE_MARGIN, PADDLE_INIT_Y),   // Player 1 (Left)
@@ -23,6 +24,9 @@ GameLogic::GameLogic():
         state->paddle1_y = PADDLE_INIT_Y;
         state->paddle2_y = PADDLE_INIT_Y;
 
+        state->sound_pos = 0.0f;
+        state->sound_speed = 1.0f;
+
         state->score_p1 = 0;
         state->score_p2 = 0;
     }
@@ -31,6 +35,16 @@ GameLogic::GameLogic():
 void GameLogic::update() {
     state->ball_x += ball.vx;
     state->ball_y += ball.vy;
+
+
+    // Make sound playback speed depend on ball velocity
+    state->sound_speed = fabs(ball.vx) / 2.0f;  // Higher speed = faster playback
+
+    // Corrupt sound position (sometimes reverse, sometimes glitch out)
+    state->sound_pos += state->sound_speed;
+    if (rand() % 10 == 0) {  // 10% chance to glitch sound backwards
+        state->sound_speed = -state->sound_speed;
+    }
 
     #ifdef DEBUG
     std::cout << "Ball position: (" << state->ball_x << ", " << state->ball_y << ")\n";

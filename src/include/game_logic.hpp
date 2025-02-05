@@ -26,7 +26,7 @@ public:
 struct GameState {
     float ball_x, ball_y;
     float paddle1_y, paddle2_y;
-
+    float sound_pos, sound_speed;
     int score_p1, score_p2;
 };
 
